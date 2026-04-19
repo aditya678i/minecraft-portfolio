@@ -1,0 +1,313 @@
+@font-face {
+  font-family: 'Minecraft';
+  src: url('/fonts/Minecrafter.Alt.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --mc-green: #48ad39;
+  --mc-green-dark: #388e3c;
+  --mc-brown: #866043;
+  --mc-stone: #7f7f7f;
+  --mc-gold: #d6b11e;
+  --mc-bg: rgba(0, 0, 0, 0.75);
+  --mc-border: #373737;
+  --mc-border-light: #ffffff;
+  --mc-text: #ffffff;
+  --mc-shadow: rgba(0, 0, 0, 0.5);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  cursor: default;
+  /* We will use a custom crosshair later */
+}
+
+body {
+  font-family: 'Minecraft', 'Courier New', Courier, monospace;
+  background-color: #000;
+  color: var(--mc-text);
+  overflow-x: hidden;
+}
+
+#bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: contain;
+  /* No crop as requested */
+  z-index: -2;
+  background-color: #000;
+}
+
+#swing-deco {
+  position: fixed;
+  top: -1px;
+  right: -30px;
+  width: 250px;
+  height: auto;
+  z-index: 150;
+  /* Above the blurred nav bar */
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+/* UI Overlay Layer */
+
+/* UI Overlay Layer */
+#ui-layer {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+}
+
+.section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  /* Removed opacity and transform animations to fix Chrome's backdrop-filter popping glitch */
+}
+
+/* Minecraft Window Style */
+.mc-window {
+  background: rgba(255, 255, 255, 0.08);
+  /* Clear glass look */
+  border: 4px solid var(--mc-border);
+  box-shadow:
+    inset -4px -4px 0px 0px rgba(0, 0, 0, 0.2),
+    inset 4px 4px 0px 0px rgba(255, 255, 255, 0.3);
+  padding: 2.5rem;
+  max-width: 800px;
+  width: 90%;
+  position: relative;
+  backdrop-filter: blur(12px);
+  image-rendering: pixelated;
+}
+
+/* Physical Work Pop-up Logic */
+.work-popup {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform: translateY(20px) scale(0.95);
+}
+
+.work-popup.visible {
+  max-height: 1500px;
+  /* Increased to allow items to expand smoothly */
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  padding: 10px;
+}
+
+.work-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  width: 240px; /* Lock layout width so it doesn't cause violent flex wrapping when shrinking */
+}
+
+.work-item:not(.expanded):hover {
+  transform: scale(1.05);
+  /* Slight lift on hover */
+}
+
+.mc-item-frame {
+  width: 240px;
+  height: 180px;
+  background: rgba(139, 139, 139, 0.4);
+  border: 4px solid #1e1e1e;
+  box-shadow: inset -4px -4px 0 rgba(0, 0, 0, 0.5), inset 4px 4px 0 rgba(255, 255, 255, 0.2);
+  position: relative;
+  image-rendering: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Do not strictly hide overflow if you want it to look like it pops out, but hidden is safer if we get weird bounds */
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.work-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Set everywhere to prevent sudden crop snapping on transitions */
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.work-item:not(.expanded):hover .work-img {
+  transform: scale(1.1);
+}
+
+/* EXPANDED CLICKED STATE */
+.work-item.expanded {
+  order: -1;
+  width: 100%; /* Overrides the 240px width above, forcing it to span 100% of top row */
+}
+
+.work-item.expanded .mc-item-frame {
+  width: 600px;
+  height: 450px;
+  max-width: 85vw;
+}
+
+.work-item.expanded .work-img {
+  transform: none;
+  /* object-fit: contain; is handled globally now for smoothness */
+}
+
+.work-label {
+  margin-top: 1rem;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: bold;
+  opacity: 0;
+  transition: all 0.3s;
+  text-shadow:
+    2px 2px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+  letter-spacing: 2px;
+}
+
+.work-item:hover .work-label {
+  opacity: 1;
+  color: #FFB1CB;
+  transform: translateY(-5px);
+}
+
+/* Corner Accents */
+.mc-window::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}
+
+.mc-window-header {
+  position: absolute;
+  top: -20px;
+  left: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 3px solid rgba(255, 255, 255, 0.5);
+  padding: 2px 10px;
+  font-size: 0.8rem;
+  color: #fff;
+  box-shadow: inset -2px -2px 0 rgba(0, 0, 0, 0.2), inset 2px 2px 0 rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(4px);
+}
+
+/* Typography styles */
+h1 {
+  font-size: 3rem;
+  color: var(--mc-gold);
+  text-shadow: 3px 3px 0 var(--mc-shadow);
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+}
+
+p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+/* Buttons */
+.mc-button {
+  background: #c6c6c6;
+  border: 4px solid #000;
+  padding: 0.5rem 1.5rem;
+  font-family: inherit;
+  font-size: 1.1rem;
+  color: #333;
+  box-shadow:
+    inset -2px -2px 0px 0px #555,
+    inset 2px 2px 0px 0px #fff;
+  transition: all 0.1s;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.mc-button:hover {
+  background: var(--mc-green);
+  color: white;
+  box-shadow:
+    inset -2px -2px 0px 0px #1b5e20,
+    inset 2px 2px 0px 0px #a5d6a7;
+}
+
+.mc-button:active {
+  box-shadow:
+    inset 2px 2px 0px 0px #1b5e20,
+    inset -2px -2px 0px 0px #a5d6a7;
+  transform: scale(0.98);
+}
+
+/* Navbar */
+.mc-nav {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  padding: 1.5rem 3rem;
+  border-radius: 0 0 24px 24px;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  z-index: 100;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), transparent);
+  backdrop-filter: blur(4px);
+}
+
+.nav-item {
+  color: #FFB1CB;
+  /* Cherry Pink for visibility */
+  text-decoration: none;
+  font-size: 1.1rem;
+  padding: 4px 12px;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
+  /* Added shadow for readability */
+}
+
+.nav-item:hover {
+  color: #fff;
+  text-shadow: 2px 2px 0 #FF69B4;
+  transform: translateY(-2px);
+}
+
+.nav-item.active {
+  color: #fff;
+  border-bottom: 3px solid #FFB1CB;
+}
+
+/* Custom Cursor */
+body {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='square' stroke-linejoin='round'%3E%3Cline x1='12' y1='2' x2='12' y2='22'%3E%3C/line%3E%3Cline x1='2' y1='12' x2='22' y2='12'%3E%3C/line%3E%3C/svg%3E") 12 12, crosshair;
+}

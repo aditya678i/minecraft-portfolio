@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prayansh Bhardwaj| Minecraft Theme Portfolio</title>
+    <meta name="description"
+        content="A cinematic Minecraft-themed design portfolio showcasing creative works and skills.">
+    <link rel="stylesheet" href="./src/style.css">
+</head>
+
+<body>
+    <!-- Background Video -->
+    <video id="bg-video" autoplay muted loop playsinline>
+        <source src="/assets/background.mp4" type="video/mp4">
+    </video>
+
+    <!-- Swinging Decoration -->
+    <video id="swing-deco" autoplay muted loop playsinline>
+        <source src="/assets/swinging.mp4" type="video/mp4">
+    </video>
+
+    <!-- Navigation Header -->
+    <nav class="mc-nav">
+        <a href="#home" class="nav-item">INTRODUCTION</a>
+        <a href="#physical-works" class="nav-item">PHYSICAL WORKS</a>
+        <a href="#apparel-design" class="nav-item">APPAREL DESIGN</a>
+        <a href="#projects" class="nav-item">PRODUCT DESIGN</a>
+        <a href="#experience" class="nav-item">COMPOSITION</a>
+        <a href="#portal" class="nav-item">VIBE DESIGN</a>
+    </nav>
+
+    <!-- Content Sections -->
+    <main id="ui-layer">
+        <section id="home" class="section active">
+            <h1>The Overworld</h1>
+            <div class="mc-window">
+                <div class="mc-window-header">MOD: PRAYANSH_CORE</div>
+                <p>My name is Prayansh Bhardwaj. Ever since I can remember, I have identified myself as an 'artsy' kid.
+                </p>
+                <p>I enjoy making cinematic videos , filming others ,gaming and Drawing. As I grew to choose a
+                    professional field, I naturally found my inclination towards Design.
+
+                    I love interaction Design and I occasionally cook,craft and do a lot of gaming. I listen to music
+                    too, and enjoy watching movies though I don't count myself as a cinephile.
+
+                    I love being able to create. It feels like a medium of expression.</p>
+                <button class="mc-button" id="start-btn">Press Start</button>
+            </div>
+        </section>
+
+        <section id="physical-works" class="section">
+            <h1>Physical Works</h1>
+            <div class="mc-window">
+                <div class="mc-window-header">LOG: PHYSICAL_WORKS</div>
+                <p>Explorations in the physical realm.</p>
+                <button class="mc-button" id="toggle-work-btn">See Work</button>
+
+                <div id="work-popup-container" class="work-popup">
+                    <div class="work-item">
+                        <div class="mc-item-frame">
+                            <img src="/assets/boat.jpg" alt="Boat" class="work-img">
+                        </div>
+                        <span class="work-label">BOAT</span>
+                    </div>
+                    <div class="work-item">
+                        <div class="mc-item-frame">
+                            <img src="/assets/deer.jpg" alt="Deer" class="work-img">
+                        </div>
+                        <span class="work-label">DEER</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="apparel-design" class="section">
+            <h1>Apparel Design</h1>
+            <div class="mc-window">
+                <div class="mc-window-header">BIOME: APPAREL</div>
+                <p>Wearable artifacts and gear.</p>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                    <div>• Streetwear</div>
+                    <div>• Cyberpunk Gear</div>
+                    <div>• Techwear</div>
+                    <div>• Concept Suits</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="section">
+            <h1>Product Design</h1>
+            <div class="mc-window">
+                <div class="mc-window-header">CONTENT: PROJECT_LOG</div>
+                <p>Rare artifacts collected during my journey.</p>
+                <button class="mc-button">View Collection</button>
+            </div>
+        </section>
+
+        <section id="experience" class="section">
+            <h1>Composition</h1>
+            <div class="mc-window">
+                <div class="mc-window-header">BIOME: EXPERIENCE</div>
+                <p>Timeline of coordinates visited.</p>
+            </div>
+        </section>
+
+        <section id="portal" class="section">
+            <h1>Vibe Design</h1>
+            <div class="mc-window">
+                <div class="mc-window-header">TELEPORT: VIBES</div>
+                <p>Entering the next phase of design excellence.</p>
+            </div>
+        </section>
+
+        <section id="contact" class="section">
+            <h1>The End?</h1>
+            <div class="mc-window">
+                <div class="mc-window-header">SAVE_QUIT</div>
+                <p>You have reached the credits.</p>
+                <button class="mc-button">Message Admin</button>
+            </div>
+        </section>
+
+        <section id="footer" class="section" style="min-height: 50vh;">
+            <div style="text-align: center; opacity: 0.7;">
+                <p>© 2026 Prayansh Bhardwaj. Not an official Minecraft product.</p>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="./src/main.js"></script>
+</body>
+
+</html>
