@@ -11,6 +11,17 @@
 </head>
 
 <body>
+    <!-- Loading Screen -->
+    <div id="mc-loader">
+        <div class="loader-content">
+            <h1 id="loading-text">LOADING...</h1>
+            <div class="mc-progress-bar">
+                <div id="loading-fill"></div>
+            </div>
+            <div id="loading-percent">0%</div>
+        </div>
+    </div>
+
     <!-- Background Video -->
     <video id="bg-video" autoplay muted loop playsinline>
         <source src="/assets/background.mp4" type="video/mp4">
@@ -34,7 +45,7 @@
     <!-- Content Sections -->
     <main id="ui-layer">
         <section id="home" class="section active">
-            <h1>The Overworld</h1>
+            <h1>The Overview</h1>
             <div class="mc-window">
                 <div class="mc-window-header">MOD: PRAYANSH_CORE</div>
                 <p>My name is Prayansh Bhardwaj. Ever since I can remember, I have identified myself as an 'artsy' kid.
@@ -60,15 +71,27 @@
                 <div id="work-popup-container" class="work-popup">
                     <div class="work-item">
                         <div class="mc-item-frame">
-                            <img src="/assets/boat.jpg" alt="Boat" class="work-img">
+                            <img src="/assets/boat.jpg" alt="Boat" class="work-img" draggable="false">
                         </div>
                         <span class="work-label">BOAT</span>
                     </div>
                     <div class="work-item">
                         <div class="mc-item-frame">
-                            <img src="/assets/deer.jpg" alt="Deer" class="work-img">
+                            <img src="/assets/deer.jpg" alt="Deer" class="work-img" draggable="false">
                         </div>
                         <span class="work-label">DEER</span>
+                    </div>
+                    <div class="work-item">
+                        <div class="mc-item-frame">
+                            <img src="/assets/mandala.png" alt="Mandala Art" class="work-img" draggable="false">
+                        </div>
+                        <span class="work-label">MANDALA</span>
+                    </div>
+                    <div class="work-item">
+                        <div class="mc-item-frame">
+                            <img src="/assets/lotus.jpeg" alt="Lotus Art" class="work-img" draggable="false">
+                        </div>
+                        <span class="work-label">LOTUS</span>
                     </div>
                 </div>
             </div>
@@ -102,6 +125,40 @@
             <div class="mc-window">
                 <div class="mc-window-header">BIOME: EXPERIENCE</div>
                 <p>Timeline of coordinates visited.</p>
+                <button class="mc-button" id="toggle-comp-btn">My Work</button>
+
+                <div id="comp-popup-container" class="work-popup">
+                    <div class="work-item">
+                        <div class="mc-item-frame">
+                            <img src="/assets/comp1.jpeg" alt="Comp 1" class="work-img" draggable="false">
+                        </div>
+                    </div>
+                    <div class="work-item">
+                        <div class="mc-item-frame">
+                            <img src="/assets/comp2.jpeg" alt="Comp 2" class="work-img" draggable="false">
+                        </div>
+                    </div>
+                    <div class="work-item">
+                        <div class="mc-item-frame">
+                            <img src="/assets/comp3.jpeg" alt="Comp 3" class="work-img" draggable="false">
+                        </div>
+                    </div>
+                    <div class="work-item">
+                        <div class="mc-item-frame">
+                            <img src="/assets/comp4.jpeg" alt="Comp 4" class="work-img" draggable="false">
+                        </div>
+                    </div>
+                    <div class="work-item">
+                        <div class="mc-item-frame">
+                            <img src="/assets/comp5.jpeg" alt="Comp 5" class="work-img" draggable="false">
+                        </div>
+                    </div>
+                    <div class="work-item">
+                        <div class="mc-item-frame">
+                            <img src="/assets/comp6.jpeg" alt="Comp 6" class="work-img" draggable="false">
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
