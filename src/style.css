@@ -318,17 +318,17 @@ p {
 
 /* Portal Section Styling */
 .portal-window {
-  border-color: #9932CC;
+  border-color: #FFB1CB;
   box-shadow: 
-    0 0 20px rgba(153, 50, 204, 0.3),
+    0 0 20px rgba(255, 177, 203, 0.3),
     inset -4px -4px 0px 0px rgba(0, 0, 0, 0.4),
-    inset 4px 4px 0px 0px rgba(153, 50, 204, 0.3);
+    inset 4px 4px 0px 0px rgba(255, 177, 203, 0.3);
   animation: portal-pulse 3s infinite ease-in-out;
 }
 
 @keyframes portal-pulse {
-  0%, 100% { box-shadow: 0 0 20px rgba(153, 50, 204, 0.3); }
-  50% { box-shadow: 0 0 40px rgba(153, 50, 204, 0.6); }
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 177, 203, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(255, 177, 203, 0.6); }
 }
 
 .portal-links {
@@ -344,21 +344,21 @@ p {
   max-width: 400px;
   text-decoration: none;
   text-align: center;
-  background: #2b1d3d;
-  color: #d1a3ff !important;
-  border-color: #9932CC;
+  background: #2d161d;
+  color: #FFB1CB !important;
+  border-color: #FFB1CB;
   box-shadow:
-    inset -2px -2px 0px 0px #1a0f26,
-    inset 2px 2px 0px 0px #9932CC;
+    inset -2px -2px 0px 0px #1a0d11,
+    inset 2px 2px 0px 0px #FFB1CB;
 }
 
 .portal-btn:hover {
-  background: #9932CC !important;
-  color: #fff !important;
+  background: #FFB1CB !important;
+  color: #000 !important;
   transform: scale(1.02);
   box-shadow:
-    inset -2px -2px 0px 0px #4b1a6b,
-    inset 2px 2px 0px 0px #d1a3ff;
+    inset -2px -2px 0px 0px #c788a0,
+    inset 2px 2px 0px 0px #fff;
 }
 
 /* Navbar */
