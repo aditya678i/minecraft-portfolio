@@ -120,6 +120,10 @@ body {
   width: 100%;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 .section {
   min-height: 100vh;
   display: flex;
@@ -127,6 +131,15 @@ body {
   justify-content: center;
   align-items: center;
   padding: 2rem;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1s ease, transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+.section.in-view {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Minecraft Window Style */
