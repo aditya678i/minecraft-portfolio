@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const workItems = Array.from(document.querySelectorAll('.work-item'));
 
   const applyFLIP = (actionCallback) => {
-    // 1. FIRST: measure initial positions (we measure center X and top Y)
+    // 1. FIRST: measure initial positions
     const firstRects = workItems.map(item => {
         const r = item.getBoundingClientRect();
         return { cx: r.left + r.width / 2, y: r.top };
@@ -218,7 +218,6 @@ document.addEventListener('DOMContentLoaded', () => {
     requestAnimationFrame(() => {
         requestAnimationFrame(() => {
             workItems.forEach(item => {
-                // Ensure transform animation matches the CSS frame expansion timing
                 item.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
                 item.style.transform = 'translate(0, 0)';
                 
@@ -244,12 +243,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!isExpanded) {
                 item.classList.add('expanded');
-                playClickSound(); // Add sound feedback for expanding
+                playClickSound();
 
-                // Auto-scroll to the top of the expanded item
+                // Fire scroll 100ms after reorder so the layout has definitely settled
                 setTimeout(() => {
-                    item.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }, 200); 
+                    const windowTarget = item.closest('.mc-window');
+                    if (windowTarget) {
+                        const rect = windowTarget.getBoundingClientRect();
+                        const absoluteTop = rect.top + window.scrollY;
+                        // Scroll to the top of the window with a small offset
+                        window.scrollTo({ top: absoluteTop - 40, behavior: 'smooth' });
+                    }
+                }, 100);
             } else {
                 // Sound for collapsing
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
