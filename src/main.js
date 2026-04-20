@@ -245,6 +245,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!isExpanded) {
                 item.classList.add('expanded');
                 playClickSound(); // Add sound feedback for expanding
+
+                // Auto-scroll to the top of the expanded item
+                setTimeout(() => {
+                    item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 200); 
             } else {
                 // Sound for collapsing
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
