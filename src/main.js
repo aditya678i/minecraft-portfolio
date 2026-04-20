@@ -53,47 +53,69 @@ document.addEventListener('DOMContentLoaded', () => {
   const fill = document.getElementById('loading-fill');
   const percentText = document.getElementById('loading-percent');
   const bgVideo = document.getElementById('bg-video');
-  const videoSrc = bgVideo.querySelector('source').src;
-  
-  // Custom video loader to track progress
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', videoSrc, true);
-  xhr.responseType = 'blob';
 
-  xhr.onprogress = (event) => {
-    if (event.lengthComputable) {
-      const percent = Math.round((event.loaded / event.total) * 100);
-      fill.style.width = percent + '%';
-      percentText.textContent = percent + '%';
+  let currentPercent = 0;
+  let targetPercent = 0;
+  let hideTriggered = false;
+
+  // Smooth fake progress animation
+  const animateProgress = () => {
+    if (currentPercent < targetPercent) {
+      currentPercent = Math.min(currentPercent + 1, targetPercent);
+      fill.style.width = currentPercent + '%';
+      percentText.textContent = currentPercent + '%';
+    }
+    if (currentPercent < 100) {
+      requestAnimationFrame(animateProgress);
     }
   };
+  requestAnimationFrame(animateProgress);
 
-  xhr.onload = () => {
-    if (xhr.status === 200) {
-      const videoBlob = xhr.response;
-      const vidUrl = URL.createObjectURL(videoBlob);
-      bgVideo.src = vidUrl;
-      bgVideo.load();
-      
-      // Final transition
-      fill.style.width = '100%';
-      percentText.textContent = '100%';
-      
+  // Fake progress: crawl to 80% while video loads
+  const crawl = setInterval(() => {
+    if (targetPercent < 80) {
+      targetPercent = Math.min(targetPercent + Math.random() * 5, 80);
+    } else {
+      clearInterval(crawl);
+    }
+  }, 200);
+
+  const revealSite = () => {
+    if (hideTriggered) return;
+    hideTriggered = true;
+
+    clearInterval(crawl);
+    targetPercent = 100;
+    currentPercent = Math.max(currentPercent, 95);
+
+    // Ensure bar reaches 100 before hiding
+    setTimeout(() => {
+      loader.style.opacity = '0';
       setTimeout(() => {
-        loader.style.opacity = '0';
-        setTimeout(() => {
-            loader.style.display = 'none';
-        }, 800);
-      }, 500);
-    }
+        loader.style.display = 'none';
+      }, 800);
+    }, 600);
+
+    // Force video play (critical for mobile)
+    bgVideo.muted = true;
+    bgVideo.play().catch(() => {
+      // Autoplay blocked — add tap-to-start listener
+      document.addEventListener('touchstart', () => bgVideo.play(), { once: true });
+      document.addEventListener('click', () => bgVideo.play(), { once: true });
+    });
   };
 
-  xhr.onerror = () => {
-      // Fallback if loading fails
-      loader.style.display = 'none';
-  };
+  // Listen for video ready events
+  if (bgVideo.readyState >= 3) {
+    // Already loaded (from cache)
+    revealSite();
+  } else {
+    bgVideo.addEventListener('canplaythrough', revealSite, { once: true });
+    bgVideo.addEventListener('canplay', revealSite, { once: true });
+  }
 
-  xhr.send();
+  // Hard fallback: always reveal after 10 seconds no matter what
+  setTimeout(revealSite, 10000);
 
   setupObserver();
   
