@@ -4,21 +4,26 @@
 
 // Section Reveal Logic
 const setupObserver = () => {
+  const options = {
+    rootMargin: '-20% 0px -20% 0px',
+    threshold: 0.2
+  };
+
+  const sections = document.querySelectorAll('.section:not(#footer)');
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
-          
-          // Sync navbar active state
-          const id = entry.target.getAttribute('id');
-          document.querySelectorAll('.nav-item').forEach(link => {
-              link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
-          });
+        entry.target.classList.add('active');
+        
+        // Navigation highlight logic can go here if needed
+      } else {
+        entry.target.classList.remove('active');
       }
     });
-  }, { threshold: 0.2 });
+  }, options);
 
-  document.querySelectorAll('.section').forEach(section => {
+  sections.forEach(section => {
     observer.observe(section);
   });
 };
