@@ -161,6 +161,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Projects -> Toggle Pop-up
+  const toggleProdBtn = document.getElementById('toggle-prod-btn');
+  const prodContainer = document.getElementById('prod-popup-container');
+  if (toggleProdBtn && prodContainer) {
+    toggleProdBtn.addEventListener('click', () => {
+        const isVisible = prodContainer.classList.toggle('visible');
+        toggleProdBtn.textContent = isVisible ? 'Close Collection' : 'View Collection';
+        
+        // Bonus sound effect
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        osc.frequency.setValueAtTime(isVisible ? 300 : 200, audioCtx.currentTime);
+        osc.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.05);
+
+        // Collapse all items when toggling container just in case
+        if (!isVisible) {
+            prodContainer.querySelectorAll('.work-item').forEach(item => item.classList.remove('expanded'));
+        }
+    });
+  }
+
   // Work items FLIP helper
   const workItems = Array.from(document.querySelectorAll('.work-item'));
 
