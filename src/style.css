@@ -154,6 +154,19 @@ body {
   transform: translateY(0) scale(1);
 }
 
+/* Internal Content Reveal */
+.mc-window > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease-out;
+}
+
+.section.active .mc-window > *:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.2s; }
+.section.active .mc-window > *:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.3s; }
+.section.active .mc-window > *:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.4s; }
+.section.active .mc-window > *:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 0.5s; }
+.section.active .mc-window > *:nth-child(5) { opacity: 1; transform: translateY(0); transition-delay: 0.6s; }
+
 /* Physical Work Pop-up Logic */
 .work-popup {
   display: flex;
