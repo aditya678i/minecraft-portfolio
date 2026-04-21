@@ -416,7 +416,11 @@ p {
 
 .nav-item.active {
   color: #fff;
-  border-bottom: 3px solid #FFB1CB;
+  text-shadow: 
+    0 0 10px #FFB1CB,
+    2px 2px 0px rgba(0, 0, 0, 0.5);
+  border-bottom: 2px solid #FFB1CB;
+  transform: translateY(-2px);
 }
 
 /* Custom Cursor */

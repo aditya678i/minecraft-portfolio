@@ -10,15 +10,24 @@ const setupObserver = () => {
   };
 
   const sections = document.querySelectorAll('.section:not(#footer)');
+  const navItems = document.querySelectorAll('.nav-item');
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
+        // Add active to section
+        sections.forEach(s => s.classList.remove('active'));
         entry.target.classList.add('active');
         
-        // Navigation highlight logic can go here if needed
-      } else {
-        entry.target.classList.remove('active');
+        // Match nav item
+        const id = entry.target.getAttribute('id');
+        navItems.forEach(item => {
+          if (item.getAttribute('href') === `#${id}`) {
+            item.classList.add('active');
+          } else {
+            item.classList.remove('active');
+          }
+        });
       }
     });
   }, options);
@@ -105,6 +114,9 @@ document.addEventListener('DOMContentLoaded', () => {
       loader.style.opacity = '0';
       setTimeout(() => {
         loader.style.display = 'none';
+        // Trigger reveal for first section
+        const intro = document.getElementById('introduction');
+        if (intro) intro.classList.add('active');
       }, 800);
     }, 600);
 
