@@ -114,9 +114,13 @@ document.addEventListener('DOMContentLoaded', () => {
       loader.style.opacity = '0';
       setTimeout(() => {
         loader.style.display = 'none';
-        // Trigger reveal for first section
-        const intro = document.getElementById('introduction');
-        if (intro) intro.classList.add('active');
+        
+        // Wait a small beat, then trigger the reveal and start the observer
+        setTimeout(() => {
+          const intro = document.getElementById('introduction');
+          if (intro) intro.classList.add('active');
+          setupObserver();
+        }, 300);
       }, 800);
     }, 600);
 
@@ -140,8 +144,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Hard fallback: always reveal after 10 seconds no matter what
   setTimeout(revealSite, 10000);
-
-  setupObserver();
   
   // Custom Crosshair Click Sound
   document.querySelectorAll('.mc-button').forEach(btn => {
