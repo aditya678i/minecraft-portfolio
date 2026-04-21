@@ -54,6 +54,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const percentText = document.getElementById('loading-percent');
   const bgVideo = document.getElementById('bg-video');
 
+  // Handle Title Typography (Split into spans for animation)
+  document.querySelectorAll('section h1').forEach(h1 => {
+    const text = h1.innerText;
+    h1.innerHTML = '';
+    [...text].forEach((letter, i) => {
+      const span = document.createElement('span');
+      span.innerText = letter === ' ' ? '\u00A0' : letter;
+      span.style.setProperty('--index', i);
+      h1.appendChild(span);
+    });
+  });
+
   let currentPercent = 0;
   let targetPercent = 0;
   let hideTriggered = false;

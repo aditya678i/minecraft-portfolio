@@ -284,6 +284,33 @@ h1 {
   text-shadow: 4px 4px 0px #ffbb00;
   margin-bottom: 1.5rem;
   text-transform: uppercase;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.1rem;
+}
+
+h1 span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(-30px) rotateX(-90deg);
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition-delay: calc(var(--index) * 0.05s);
+  cursor: default;
+  transform-origin: bottom;
+}
+
+.section.active h1 span {
+  opacity: 1;
+  transform: translateY(0) rotateX(0deg);
+}
+
+h1 span:hover {
+  transform: scale(1.4) translateY(-15px) !important;
+  color: #ffffff !important;
+  text-shadow: 0 10px 20px rgba(0,0,0,0.5), 6px 6px 0px #ffbb00;
+  z-index: 10;
+  transition: all 0.1s ease-out !important;
+  transition-delay: 0s !important;
 }
 
 p {
